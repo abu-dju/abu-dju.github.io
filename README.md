@@ -30,13 +30,13 @@ About the Dictionary files
 
 The following dictionaries shall be available when the "digging" will finish:
 
-Arabic-English: -Edward Willam Lane: An Arabic-English Lexicon -H. Anthony Salmoné: An Advanced Learner's Arabic-English Dictionary
+Arabic-English: Edward Willam Lane: An Arabic-English Lexicon; H. Anthony Salmoné: An Advanced Learner's Arabic-English Dictionary
 
-Latin-English: -Lewis: A Short Latin-English Lexicon
+Latin-English: Lewis: A Short Latin-English Lexicon
 
-Greek-English: -Henry George Liddell: An Intermediate Greek-English Lexicon -G. ABBOTT-SMITH: A MANUAL GREEK LEXICON OF THE NEW TESTAMENT -Robert Scott: A Greek-English Lexicon
+Greek-English: Henry George Liddell: An Intermediate Greek-English Lexicon; G. ABBOTT-SMITH: A MANUAL GREEK LEXICON OF THE NEW TESTAMENT; Robert Scott: A Greek-English Lexicon
 
-French-French: Le Dictionnaire de l'Académie Française de 1935 (8ème Edition) Le Dictionnnaire de la Langue Française d'Emile Littré.
+French-French: Le Dictionnaire de l'Académie Française de 1935 (8ème Edition); Le Dictionnnaire de la Langue Française d'Emile Littré.
 
 Note that the last two French dictionaries are already available in StarDict format. I will only provide some further enhencements and convert them to the other formats.
 
