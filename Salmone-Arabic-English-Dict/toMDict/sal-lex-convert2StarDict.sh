@@ -240,6 +240,10 @@ perl -p -i -e 's|^\s+||g' salmone-lexicon.xml
 	perl -p -i -e 's|<xr>||g' salmone-lexicon.csv
 	perl -p -i -e 's|</xr>||g' salmone-lexicon.csv
 	perl -p -i -e 's|^\s+||g' salmone-lexicon.csv
+	perl -p -i -e 's|  +| |g' salmone-lexicon.csv
+	perl -p -i -e 's|<sense >||g' salmone-lexicon.csv
+	 
+	
 
 }
 
