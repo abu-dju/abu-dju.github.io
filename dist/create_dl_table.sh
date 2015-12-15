@@ -9,7 +9,7 @@ echo \<td\>File\</td\> >> table.html
 echo \<td\>Creation Date\</td\> >> table.html
 echo \</tr\> >> table.html
 
-for file in *.$1
+for file in *.7z
 do
 	echo \<tr\> >> table.html
 	echo \<td\>\<a href=\"dist\/PUTLINKHERE\/`echo $file`\"\>`echo $file`\</a\>\</td\> >> table.html
