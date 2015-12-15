@@ -27,103 +27,69 @@ join_files(){
 
 first_Cleanup(){
 	perl -p -i -e \
-		's|^\s+||g; \
-		s|<entryFree|\n\n_____\n\n<entryFree|g; \
-		s|<itype>[0-9]+</itype>||g; \
-		s|<itype>.*?</itype>||g; \
-		s|<entryFree>\s+<form>\s+<orth|<entryFree><form><orth|g; \
-		s|<orth|\n######<orth>|g; \
-		s|</orth>|\n</orth>|g;' $FILENAME_XML
-}
-
-second_Cleanup(){
-	perl -p -i -e \
-		's|<br>| |g; \
-		s|[a-zA-Z]+?="[a-zA-Z]+?\s*[a-zA-Z]*?"||g; \
-		s|n="\*"||g; \
-		s|[a-zA-Z]+?="[a-zA-Z]*?[0-9]+?"||g; \
-		s|<entryFree\s*?[a-zA-Z]+?="(\w+?\W*?\w*?)"\s*?>|<entryFree>$1|g; \
-		s|<entryFree\s*?[a-zA-Z]+?="(.+?)"\s*?>|<entryFree>$1|g; \
-		s|<form\W+?>|<form>|g; \
-		s|<head\W+?>|<head>|g; \
-		s|<foreign\W+?>|<foreign>|g; \
-		s|<hi\W+?>|<hi>|g; \
-		s|<orth\W+?[a-zA-Z]+?=""\s*>|<orth>|g; \
-		s|<orth\W+?>|<orth>|g; \
-		s|<itype>[0-9]+</itype>||g; \
-		s|<itype>.*?</itype>||g; \
-		s|^\s+||g;' $FILENAME_XML
-		#s|(<entryFree>\W*?(<form>)+?\W*?(<orth>)+?\W*?(.*?)(</orth>)+?)|$FILENAME_XML\t|g' $FILENAME_XML
-}
-
-third_Cleanup(){
-	perl -p -i -e \
-		's|<analytic/>||g; \
+		's|<entryFree.*[^<\n\r\f]*?>|\n\n_____\n\n|g; \
+		s|</entryFree>||g; \
+		s|<orth|\n<orth|g; \
+		s|<\?xml version="1.0" encoding="UTF-8"\?>||g; \
+		s|<TEI.2>||g; \
+		s|<text>||g; \
+		s|<body>||g; \
+		s|<div1.*?[^<\n\r\f]>||g; \
+		s|<head.*?[^<\n\r\f]>||g; \
+		s|</head>||g; \
+		s|<div2.*?[^<\n\r\f]>||g; \
+		s|<form.*?[^<\n\r\f]*?>||g; \
+		s|</form>||g; \
+		s|<itype>.+?[^<\n\r\f]*?</itype>||g; \
+		s|<orth.*?[^<\n\r\f]*?>||g; \
+		s|</orth>||g; \
+		s|<hi.*?[^<\n\r\f]*?>||g; \
+		s|</hi>||g; \
+		s|<foreign.*?[^<\n\r\f]*?>||g; \
+		s|</foreign>||g; \
+		s|</div2>||g; \
+		s|<quote>||g; \
+		s|</quote>||g; \
+		s|<L>||g; \
+		s|</L>||g; \
+		s|<pb.*?[^<\n\r\f]*?>||g; \
+		s|<G/>||g; \
+		s|</div1>||g; \
+		s|</body>||g; \
+		s|</text>||g; \
+		s|</TEI.2>||g; \
+		s|<H>||g; \
+		s|</H>||g; \
+		s|<G>||g; \
+		s|</G>||g; \
+		s|<head>||g; \
+		s|<analytic/>||g; \
 		s|</author>||g; \
 		s|<author>||g; \
 		s|</authority>||g; \
 		s|<authority>||g; \
 		s|</availability>||g; \
-		s|<availability\W+>||g; \
+		s|<availability status="free">||g; \
 		s|</biblStruct>||g; \
 		s|<biblStruct>||g; \
-		s|</body>||g; \
-		s|<body>||g; \
-		s|</cell>||g; \
-		s|<cell\W+>||g; \
 		s|</date>||g; \
 		s|<date>||g; \
-		s|</div1>||g; \
-		s|<div1||g; \
-		s|</div2>||g; \
-		s|<div2\W+>||g; \
-		s|encoding="UTF-8"\?>||g; \
 		s|</fileDesc>||g; \
 		s|<fileDesc>||g; \
-		s#</foreign>##g; \
-		s|<foreign>||g; \
-		s|</dictScrap>||g; \
-		s|<dictScrap>||g; \
-		s|</form>||g; \
-		s|<form>||g; \
-		s|</orth>||g; \
-		s|<orth>||g; \
-		s|</G>||g; \
-		s|<G/>||g; \
-		s|<G>||g; \
-		s|<H>[0-9]+</H>||g; \
-		s|</head>||g; \
-		s|<head>||g; \
-		s|</hi>||g; \
-		s|<hi>||g; \
-		s|</itype>||g; \
-		s|<itype>||g; \
-		s|</quote>||g; \
-		s|<quote>||g; \
-		s|</sense>||g; \
-		s|<sense>||g; \
-		s|</H>||g; \
-		s|<H/>||g; \
 		s|</imprint>||g; \
 		s|<imprint>||g; \
-		s|</item>| |g; \
-		s|<item>| |g; \
-		s|</listBibl>| |g; \
-		s|<listBibl>| |g; \
-		s|</list>| |g; \
-		s|<list>| |g; \
-		s|</L>|LCLOSE|g; \
-		s|<L>|LOPEN|g; \
-		s|</monogr>| |g; \
-		s|<monogr>| |g; \
-		s|</note>| |g; \
-		s|<note\W*?>| |g; \
-		s|</notesStmt>| |g; \
-		s|<notesStmt>| |g; \
-		s|<pb>||g; \
-		s|<pb\W+>||g; \
-		s|<pb\W+/>||g; \
-		s|<pb/>||g; \
+		s|</item>||g; \
+		s|<item>||g; \
+		s|</list>||g; \
+		s|<list>||g; \
+		s|</listBibl>||g; \
+		s|<listBibl>||g; \
+		s|</monogr>||g; \
+		s|<monogr>||g; \
+		s|</note>||g; \
+		s|<note anchored="yes" place="unspecified">||g; \
+		s|</notesStmt>||g; \
+		s|<notesStmt>||g; \
 		s|</p>||g; \
 		s|<p>||g; \
 		s|</publicationStmt>||g; \
@@ -132,115 +98,100 @@ third_Cleanup(){
 		s|<publisher>||g; \
 		s|</pubPlace>||g; \
 		s|<pubPlace>||g; \
-		s|</row>||g; \
-		s|<row\W+>||g; \
 		s|</sourceDesc>||g; \
 		s|<sourceDesc>||g; \
-		s|</Table>||g; \
-		s|<Table>||g; \
-		s|&amp;|\&|g; \
-		s|amp;|\&|g; \
-		s|&gt;|>|g; \
-		s|&lt;|<|g; \
-		s|&quot;|"|g; \
-		s|&&|\&|g; \
-		s|</TEI.2>||g; \
-		s|<TEI.2>||g; \
-		s|<\?xml version="1.0"||g; \
 		s|</teiHeader>||g; \
-		s|<teiHeader\W+>||g; \
-		s|</text>||g; \
-		s|</text>||g; \
-		s|<text>||g; \
+		s|<teiHeader type="text" status="new">||g; \
 		s|</title>||g; \
 		s|<title>||g; \
 		s|</titleStmt>||g; \
 		s|<titleStmt>||g; \
-		s|<entryFree>||g; \
-		s|</entryFree>||g;' $FILENAME_XML
+		s|<H/>||g; \
+		s|<sense>||g; \
+		s|<dictScrap>||g; \
+		s|</dictScrap>||g; \
+		s|</sense>||g; \		
+		s|<Table>| |g; \
+		s|<row role="data">| |g; \
+		s|<cell role="data" rows="1" cols="1">| |g; \
+		s|</cell>| |g; \
+		s|</row>| |g; \
+		s|</Table>| |g; \
+		s|\n\n\n|\n|g; \
+		s|\n\n|\n|g; \
+		s|_____|\n\n\n_____\n|g; \
+		s|^\s+||g; \
+		s|�| |g; \
+		s|@| |g; \
+		s|=| |g; \
+		s|\r|\n|g; \
+		s|foreignopen||g; \
+		s|_____\s*(.*?see)|$1|g; \
+		s|\f|\n|g; \
+		s|\r|\n|g; \
+		s|[ ]{2,}| |g;' $FILENAME_XML
+		#editpadpro7 $FILENAME_XML
 }
 
-fourth_Cleanup(){	 
-	perl -p -i -e \
-		's|&amp,amp,|\&|g; \
-		s|&amp|\&|g; \
-		s|&amp;|\&|g; \
-		s|[a-zA-Z]+?>/||g; \
-		s|[a-zA-Z]+?" >||g; \
-		s|<div2 part"[a-zA-Z]+?" [a-zA-Z]+?"[a-zA-Z]+?"\W+>||g; \
-		s|<div2 part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|<div2 part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|<div2 part="[a-zA-Z]+?">||g; \
-		s|<div2 part="[a-zA-Z]+?" >||g; \
-		s|<div2 part="[a-zA-Z]+?" \$" >||g; \
-		s|<div2 part="[a-zA-Z]+?" \*" >||g; \
-		s|<div2 part"[a-zA-Z]+?">||g; \
-		s|<div2 part"N"\W+>||g; \
-		s|<entryFree >||g; \
-		s|<entryFree\W+>||g; \
-		s|<form type="[a-zA-Z]+? [a-zA-Z]+?">||g; \
-		s|<form type="[a-zA-Z]+?">||g; \
-		s|=||g; \
-		s|\*" >||g; \
-		s|― - |―|g; \
-		s|<H>||g; \
-		s|<orth orig="[a-b]+"\W+>||g; \
-		s|<orth orig="[a-zA-Z]+?" >||g; \
-		s|<orth orig"[a-zA-Z]+"\W+>||g; \
-		s|part="[a-zA-Z]+?" [a-zA-Z]+?[0-9]+?" >||g; \
-		s|part"[a-zA-Z]+?" [a-zA-Z]+?"[a-zA-Z]+?"\W+>||g; \
-		s|part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|" part="[a-zA-Z]+?">||g; \
-		s|" part="[a-zA-Z]+?"||g; \
-		s|<pb [0-9]+"/>||g; \
-		s|<\?xml versio1.0"||g; \
-		s|<\?xml versio1.0" part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|<\?xml versio1.0" part="[a-zA-Z]+?" >||g; \
-		s|<\?xml versio1.0" part="[a-zA-Z]+?" \$" >||g; \
-		s|<div2 n"\$"\W+>||g; \
-		s|>| |g;' $FILENAME_XML	 
+2_convert2_dictd_and_mix_tashkeel_and_tasheel_less_dicts(){
+	# this will enable us to search for tashkeel-less words
+	dictfmt --utf8 -u dfmcreator@gmail.com -s "Lane Arabic-English Lexicon" \
+	-c5 lane-lexicon-no-tashkeel < $FILENAME_XML
+	# delete inconsistencies from index file
+	sed -e '1,600d' -i lane-lexicon-no-tashkeel.index
+	
+	# this will enable us to search for words with tashkeel
+	dictfmt --utf8 --allchars -u dfmcreator@gmail.com -s "Lane Arabic-English Lexicon" \
+	-c5 lane-lexicon-tashkeel < $FILENAME_XML
+	# delete inconsistencies from index file
+	sed -e '1,602d' -i lane-lexicon-tashkeel.index
 }
 
-fifth_Cleanup(){
+3_convert2CSVwithPYGLOSSARY(){
+	python2.7 ../../deps/pyglossary/pyglossary.py lane-lexicon-no-tashkeel.index lane-lexicon-no-tashkeel.txt	
+	python2.7 ../../deps/pyglossary/pyglossary.py lane-lexicon-tashkeel.index lane-lexicon-tashkeel.txt
+	# Join the two files
+	cat lane-lexicon-no-tashkeel.txt lane-lexicon-tashkeel.txt > lane-lexicon.txt
+	#editpadpro7 lane-lexicon.txt
+}
+
+further_Cleanup(){
 	perl -p -i -e \
-		's|\n| |g; \
-		s#((―|-)*b[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s#((―|-)*a[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s#((―|-)*B[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s#((―|-)*A[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s|_____|\n\n_____\n\n|g; \
-		s|######|\n|g; \	
-		s|  +| |g;' $FILENAME_XML
+		's#((―|-)*b[0-9]+(―|-)+)#\\n\\n[$1]#g; \
+		s#((―|-)*a[0-9]+(―|-)+)#\\n\\n[$1]#g; \
+		s#((―|-)*B[0-9]+(―|-)+)#\\n\\n[$1]#g; \
+		s#((―|-)*A[0-9]+(―|-)+)#\\n\\n[$1]#g; \
+		s|[ ]{2,}| |g;' lane-lexicon.txt
 }
 
 convert_2_dictd(){
-dictfmt --utf8 -u dfmcreator@gmail.com -s "Lane Arabic-English Lexicon" -c5 lane-lexicon < $FILENAME_XML
+	python2.7 ../../deps/pyglossary/pyglossary.py lane-lexicon.txt lane-lexicon.index
 }
 
 cleanup(){
-rm -rfv $FILENAME_XML
-mkdir -p dictd-lane_ara_eng-lexicon && mv -v lane-lexicon.dict lane-lexicon.index dictd-lane_ara_eng-lexicon/
+	rm -rfv $FILENAME_XML
+	mkdir -p dictd-lane_ara_eng-lexicon && \
+	dictunzip lane-lexicon.dict.dz
+	mv -vf lane-lexicon.dict lane-lexicon.index dictd-lane_ara_eng-lexicon/
+	rm -rfv lane-lexicon.txt lane-lexicon-no-tashkeel.dict lane-lexicon-no-tashkeel.index lane-lexicon-no-tashkeel.txt lane-lexicon-tashkeel.dict lane-lexicon-tashkeel.index lane-lexicon-tashkeel.txt
 }
 
-echo Stage 1 join_files
+echo Stage 0 join_files
 join_files
 
-echo Stage 2 first_Cleanup
+echo Stage 1 first_Cleanup
 first_Cleanup
 
-echo Stage 3 second_Cleanup
-second_Cleanup
+echo Stage 2 2_convert2_dictd_and_mix_tashkeel_and_tasheel_less_dicts
+2_convert2_dictd_and_mix_tashkeel_and_tasheel_less_dicts
 
-echo Stage 4 third_Cleanup
-third_Cleanup
+echo Stage 3 3_convert2CSVwithPYGLOSSARY
+3_convert2CSVwithPYGLOSSARY
 
-echo Stage 5 fourth_Cleanup
-fourth_Cleanup
+echo Stage 4 further_Cleanup
+further_Cleanup
 
-echo Stage 6 fifth_Cleanup
-fifth_Cleanup
-
-echo Stage 7 convert_2_dictd
+echo Stage 5 convert_2_dictd
 convert_2_dictd
 
 echo Stage 8 cleanup

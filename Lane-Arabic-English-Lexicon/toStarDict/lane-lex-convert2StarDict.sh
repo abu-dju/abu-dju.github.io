@@ -148,8 +148,8 @@ FILENAME_CSV=lane-lexicon.csv
 }
 
 3_convert2CSVwithPYGLOSSARY(){
-	python2.7 ./pyglossary/pyglossary.py lane-lexicon-no-tashkeel.index lane-lexicon-no-tashkeel.txt	
-	python2.7 ./pyglossary/pyglossary.py lane-lexicon-tashkeel.index lane-lexicon-tashkeel.txt
+	python2.7 ../../deps/pyglossary/pyglossary.py lane-lexicon-no-tashkeel.index lane-lexicon-no-tashkeel.txt	
+	python2.7 ../../deps/pyglossary/pyglossary.py lane-lexicon-tashkeel.index lane-lexicon-tashkeel.txt
 	# Join the two files
 	cat lane-lexicon-no-tashkeel.txt lane-lexicon-tashkeel.txt > lane-lexicon.csv
 }
@@ -173,8 +173,8 @@ FILENAME_CSV=lane-lexicon.csv
 		s|CLOSECELL|</cell>|g; \
 		s|CLOSEROW|</row>|g; \
 		s|CLOSETABLE|</Table>|g; \		
-		s|HI_OPEN|<i><FONT COLOR="DarkBlue">|g; \
-		s|HI_CLOSE|</FONT></i>|g; \
+		s|HI_OPEN|<b><i><FONT COLOR="DarkBlue">|g; \
+		s|HI_CLOSE|</FONT></i></b>|g; \
 		s|― - |―|g; \
 		s|-|―|g; \
 		s|― ―|―|g; \
@@ -195,7 +195,7 @@ FILENAME_CSV=lane-lexicon.csv
 	# Convert to StarDict
 	# Adding a new line at the end of the file
 	echo >> "$dict"
-	./tabfile "$dict"
+	../../deps/tabfile "$dict"
 }
 
 clean_up(){
@@ -209,11 +209,11 @@ convert2otherFormats(){
 	# Unzip dict
 	dictunzip lane-lexicon.dict.dz
 	# Convert to xdxf
-	./makedict -i stardict -o xdxf lane-lexicon.ifo
+	../../deps/makedict -i stardict -o xdxf lane-lexicon.ifo
 	# Fix color problems
 	./fix_xdxd_dicts_colors.sh lane-lexicon/dict.xdxf
 	# Prepare convertion to slob format (Aard2)
-	source env-slob/bin/activate
+	source ../../deps/env-slob/bin/activate
 	# cleanup
 	rm -rfv lane-lexicon.slob
 	xdxf2slob -c lzma2 -o lane-lexicon.slob -a abu-dju.github.io lane-lexicon/dict.xdxf

@@ -176,8 +176,8 @@ FILENAME_CSV=salmone-lexicon.csv
 }
 
 3_convert2CSVwithPYGLOSSARY(){
-	python2.7 ./pyglossary/pyglossary.py salmone-lexicon-no-tashkeel.index salmone-lexicon-no-tashkeel.txt	
-	python2.7 ./pyglossary/pyglossary.py salmone-lexicon-tashkeel.index salmone-lexicon-tashkeel.txt
+	python2.7 ../../deps/pyglossary/pyglossary.py salmone-lexicon-no-tashkeel.index salmone-lexicon-no-tashkeel.txt	
+	python2.7 ../../deps/pyglossary/pyglossary.py salmone-lexicon-tashkeel.index salmone-lexicon-tashkeel.txt
 	# Join the two files
 	cat salmone-lexicon-no-tashkeel.txt salmone-lexicon-tashkeel.txt > salmone-lexicon.csv
 }
@@ -238,7 +238,7 @@ FILENAME_CSV=salmone-lexicon.csv
 	perl -p -i -e 's|#####_____#####_____#####|\t|g' $FILENAME_CSV
 
 	# Convert to StarDict
-	./tabfile "$dict"
+	../../deps/tabfile "$dict"
 }
 
 clean_up(){
@@ -252,11 +252,11 @@ convert2otherFormats(){
 	# Unzip dict
 	dictunzip salmone-lexicon.dict.dz
 	# Convert to xdxf
-	./makedict -i stardict -o xdxf salmone-lexicon.ifo
+	../../deps/makedict -i stardict -o xdxf salmone-lexicon.ifo
 	# Fix color problems
 	./fix_xdxd_dicts_colors.sh salmone-lexicon/dict.xdxf
 	# Prepare convertion to slob format (Aard2)
-	source env-slob/bin/activate
+	source ../../deps/env-slob/bin/activate
 	# cleanup
 	rm -rfv salmone-lexicon.slob
 	xdxf2slob -c lzma2 -o salmone-lexicon.slob -a abu-dju.github.io salmone-lexicon/dict.xdxf

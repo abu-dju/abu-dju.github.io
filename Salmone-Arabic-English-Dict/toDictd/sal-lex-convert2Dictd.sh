@@ -277,7 +277,7 @@ fifth_Cleanup(){
 		s|<gram >||g; \
 		s|<state />||g; \
 		s|>| |g; \
-		s|  +| |g; \
+		s|[ ]{2,}| |g; \
 		s|<state /||g; \
 		s|<gram||g; \
 		s|<ref||g; \
