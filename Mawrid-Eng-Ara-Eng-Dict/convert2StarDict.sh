@@ -45,7 +45,7 @@ cleanup_json_stuff(){
 }
 
 convert2StarDictWithLINGUAE(){
-	 python linguae/linguae.py mawrid_dict.csv
+	 python2.7 ../../deps/linguae/linguae.py
 }
 
 echo Stage 1 cleanup_json_stuff

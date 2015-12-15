@@ -156,8 +156,7 @@ FILENAME_CSV=salmone-lexicon.csv
 		s|\n\n\n|\n|g; \
 		s|\n\n|\n|g; \
 		s|_____|\n\n\n_____\n|g; \
-		s|^\s+||g;' $FILENAME_XML
-		
+		s|^\s+||g;' $FILENAME_XML		
 		#editpadpro7 $FILENAME_XML
 }
 

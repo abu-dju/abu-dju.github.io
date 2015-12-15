@@ -30,14 +30,15 @@ first_Cleanup(){
 		's|<entryFree.*[^<\n\r\f]*?>|\n\n_____\n\n|g; \
 		s|</entryFree>||g; \
 		s|<orth|\n<orth|g; \
+		s|</orth>|\n</orth>|g; \
 		s|<\?xml version="1.0" encoding="UTF-8"\?>||g; \
 		s|<TEI.2>||g; \
 		s|<text>||g; \
 		s|<body>||g; \
-		s|<div1.*?[^<\n\r\f]>||g; \
-		s|<head.*?[^<\n\r\f]>||g; \
+		s|<div1.*?[^<\n\r\f]*?>||g; \
+		s|<head.*?[^<\n\r\f]*?>||g; \
 		s|</head>||g; \
-		s|<div2.*?[^<\n\r\f]>||g; \
+		s|<div2.*?[^<\n\r\f]*?>||g; \
 		s|<form.*?[^<\n\r\f]*?>||g; \
 		s|</form>||g; \
 		s|<itype>.+?[^<\n\r\f]*?</itype>||g; \
@@ -48,7 +49,7 @@ first_Cleanup(){
 		s|<foreign.*?[^<\n\r\f]*?>||g; \
 		s|</foreign>||g; \
 		s|</div2>||g; \
-		s|<quote>||g; \
+		s|<quote.*?[^<\n\r\f]*?>||g; \
 		s|</quote>||g; \
 		s|<L>||g; \
 		s|</L>||g; \
@@ -62,7 +63,7 @@ first_Cleanup(){
 		s|</H>||g; \
 		s|<G>||g; \
 		s|</G>||g; \
-		s|<head>||g; \
+		s|<head.*?[^<\n\r\f]*?>||g; \
 		s|<analytic/>||g; \
 		s|</author>||g; \
 		s|<author>||g; \
@@ -124,7 +125,6 @@ first_Cleanup(){
 		s|�| |g; \
 		s|@| |g; \
 		s|=| |g; \
-		s|\r|\n|g; \
 		s|foreignopen||g; \
 		s|_____\s*(.*?see)|$1|g; \
 		s|\f|\n|g; \
@@ -157,7 +157,8 @@ first_Cleanup(){
 
 further_Cleanup(){
 	perl -p -i -e \
-		's#((―|-)*b[0-9]+(―|-)+)#\\n\\n[$1]#g; \
+		's|\\n| |g; \
+		s#((―|-)*b[0-9]+(―|-)+)#\\n\\n[$1]#g; \
 		s#((―|-)*a[0-9]+(―|-)+)#\\n\\n[$1]#g; \
 		s#((―|-)*B[0-9]+(―|-)+)#\\n\\n[$1]#g; \
 		s#((―|-)*A[0-9]+(―|-)+)#\\n\\n[$1]#g; \

@@ -15,7 +15,7 @@
 #
 #
 # This script is a quick and "dirty" way to reformat and convert the
-#+ Lane Arabic-English Lexicon to various dictionary formats.
+#+ Salmone Arabic-English Lexicon to various dictionary formats.
 #
 # Copyright 2015 Abu Djuwairiyyah Karim Mohammad Karimou
 
@@ -27,291 +27,194 @@ join_files(){
 
 first_Cleanup(){
 	perl -p -i -e \
-		's|^\s+||g; \
-		s|<entryFree|\n\n_____\n\n<entryFree|g; \
-		s|<itype>[0-9]+</itype>||g; \
-		s|<itype>.*?</itype>||g; \
-		s|<entryFree>\s+<form>\s+<orth|<entryFree><form><orth|g; \
-		s|<orth|\n######<orth>|g; \
-		s|</orth>|\n</orth>|g;' $FILENAME_XML
-}
-
-second_Cleanup(){
-	perl -p -i -e \
-		's|<br>| |g; \
-		s|[a-zA-Z]+?="[a-zA-Z]+?\s*[a-zA-Z]*?"||g; \
-		s|n="\*"||g; \
-		s|[a-zA-Z]+?="[a-zA-Z]*?[0-9]+?"||g; \
-		s|<entryFree\s*?[a-zA-Z]+?="(\w+?\W*?\w*?)"\s*?>|<entryFree>$1|g; \
-		s|<entryFree\s*?[a-zA-Z]+?="(.+?)"\s*?>|<entryFree>$1|g; \
-		s|<form\W+?>|<form>|g; \
-		s|<head\W+?>|<head>|g; \
-		s|<foreign\W+?>|<foreign>|g; \
-		s|<hi\W+?>|<hi>|g; \
-		s|<orth\W+?[a-zA-Z]+?=""\s*>|<orth>|g; \
-		s|<orth\W+?>|<orth>|g; \
-		s|<itype>[0-9]+</itype>||g; \
-		s|<itype>.*?</itype>||g; \
-		s|^\s+||g;' $FILENAME_XML
-		#s|(<entryFree>\W*?(<form>)+?\W*?(<orth>)+?\W*?(.*?)(</orth>)+?)|$FILENAME_XML\t|g' $FILENAME_XML
-}
-
-third_Cleanup(){
-	perl -p -i -e \
-		's|<analytic/\W*?>||g; \
-		s|</author\W*?>||g; \
-		s|<author\W*?>||g; \
-		s|</authority\W*?>||g; \
-		s|<authority\W*?>||g; \
-		s|</availability\W*?>||g; \
-		s|<availability\W+\W*?>||g; \
-		s|</biblStruct\W*?>||g; \
-		s|<biblStruct\W*?>||g; \
-		s|</body\W*?>||g; \
-		s|<body\W*?>||g; \
-		s|</cell\W*?>||g; \
-		s|<cell\W+>||g; \
-		s|</date\W*?>||g; \
-		s|<date\W*?>||g; \
-		s|</div1\W*?>||g; \
-		s|<div1||g; \
-		s|</div2\W*?>||g; \
-		s|<div2\W+>||g; \
-		s|encoding="UTF-8"\?\W*?>||g; \
-		s|</fileDesc\W*?>||g; \
-		s|<fileDesc\W*?>||g; \
-		s#</foreign\W*?>##g; \
-		s|<foreign\W*?>||g; \
-		s|</dictScrap\W*?>||g; \
-		s|<dictScrap\W*?>||g; \
-		s|</form\W*?>||g; \
-		s|<form\W*?>||g; \
-		s|</orth\W*?>||g; \
-		s|<orth\W*?>||g; \
-		s|</G\W*?>||g; \
-		s|<G/\W*?>||g; \
-		s|<G\W*?>||g; \
-		s|<H\W*?>[0-9]+</H\W*?>||g; \
-		s|</head\W*?>||g; \
-		s|<head\W*?>||g; \
-		s|</hi\W*?>||g; \
-		s|<hi\W*?>||g; \
-		s|</itype\W*?>||g; \
-		s|<itype\W*?>||g; \
-		s|</quote\W*?>||g; \
-		s|<quote\W*?>||g; \
-		s|</sense\W*?>||g; \
-		s|<sense\\W*?>||g; \
-		s|</H\W*?>||g; \
-		s|<H/\W*?>||g; \
-		s|</imprint\W*?>||g; \
-		s|<imprint\W*?>||g; \
-		s|</item\W*?>| |g; \
-		s|<item\W*?>| |g; \
-		s|</listBibl\W*?>| |g; \
-		s|<listBibl\W*?>| |g; \
-		s|</list\W*?>| |g; \
-		s|<list\W*?>| |g; \
-		s|</L\W*?>|LCLOSE|g; \
-		s|<L\W*?>|LOPEN|g; \
-		s|</monogr\W*?>| |g; \
-		s|<monogr\W*?>| |g; \
-		s|</note\W*?>| |g; \
-		s|<note\W*?\W*?>| |g; \
-		s|</notesStmt\W*?>| |g; \
-		s|<notesStmt\W*?>| |g; \
-		s|<pb\W*?>||g; \
-		s|<pb\W+\W*?>||g; \
-		s|<pb\W+/\W*?>||g; \
-		s|<pb/\W*?>||g; \
-		s|</p\W*?>||g; \
-		s|<p\W*?>||g; \
-		s|</publicationStmt\W*?>||g; \
-		s|<publicationStmt\W*?>||g; \
-		s|</publisher\W*?>||g; \
-		s|<publisher\W*?>||g; \
-		s|</pubPlace\W*?>||g; \
-		s|<pubPlace\W*?>||g; \
-		s|</row\W*?>||g; \
-		s|<row\W+\W*?>||g; \
-		s|</sourceDesc\W*?>||g; \
-		s|<sourceDesc\W*?>||g; \
-		s|</Table\W*?>||g; \
-		s|<Table\W*?>||g; \
-		s|&amp;|\&|g; \
-		s|amp;|\&|g; \
-		s|&gt;|\W*?>|g; \
-		s|&lt;|<|g; \
-		s|&quot;|"|g; \
-		s|&&|\&|g; \
-		s|</TEI.2\W*?>||g; \
-		s|<TEI.2\W*?>||g; \
-		s|<\?xml version="1.0"||g; \
-		s|</teiHeader\W*?>||g; \
-		s|<teiHeader\W+\W*?>||g; \
-		s|</text\W*?>||g; \
-		s|</text\W*?>||g; \
-		s|<text\W*?>||g; \
-		s|</title\W*?>||g; \
-		s|<title\W*?>||g; \
-		s|</titleStmt\W*?>||g; \
-		s|<titleStmt\W*?>||g; \
-		s|<entryFree\W*?>||g; \
-		s|</entryFree>||g;' $FILENAME_XML
-}
-
-fourth_Cleanup(){	 
-	perl -p -i -e \
-		's|&amp,amp,|\&|g; \
-		s|&amp|\&|g; \
-		s|&amp;|\&|g; \
-		s|[a-zA-Z]+?>/||g; \
-		s|[a-zA-Z]+?" >||g; \
-		s|<div2 part"[a-zA-Z]+?" [a-zA-Z]+?"[a-zA-Z]+?"\W+>||g; \
-		s|<div2 part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|<div2 part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|<div2 part="[a-zA-Z]+?">||g; \
-		s|<div2 part="[a-zA-Z]+?" >||g; \
-		s|<div2 part="[a-zA-Z]+?" \$" >||g; \
-		s|<div2 part="[a-zA-Z]+?" \*" >||g; \
-		s|<div2 part"[a-zA-Z]+?">||g; \
-		s|<div2 part"N"\W+>||g; \
-		s|<entryFree >||g; \
-		s|<entryFree\W+>||g; \
-		s|<form type="[a-zA-Z]+? [a-zA-Z]+?">||g; \
-		s|<form type="[a-zA-Z]+?">||g; \
-		s|=||g; \
-		s|\*" >||g; \
-		s|― - |―|g; \
-		s|<H>||g; \
-		s|<orth orig="[a-b]+"\W+>||g; \
-		s|<orth orig="[a-zA-Z]+?" >||g; \
-		s|<orth orig"[a-zA-Z]+"\W+>||g; \
-		s|part="[a-zA-Z]+?" [a-zA-Z]+?[0-9]+?" >||g; \
-		s|part"[a-zA-Z]+?" [a-zA-Z]+?"[a-zA-Z]+?"\W+>||g; \
-		s|part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|" part="[a-zA-Z]+?">||g; \
-		s|" part="[a-zA-Z]+?"||g; \
-		s|<pb [0-9]+"/>||g; \
-		s|<\?xml versio1.0"||g; \
-		s|<\?xml versio1.0" part="[a-zA-Z]+?" [a-zA-Z]+?" >||g; \
-		s|<\?xml versio1.0" part="[a-zA-Z]+?" >||g; \
-		s|<\?xml versio1.0" part="[a-zA-Z]+?" \$" >||g; \
-		s|<div2 n"\$"\W+>||g;' $FILENAME_XML
-}
-
-fifth_Cleanup(){
-	perl -p -i -e \
-		's|<case\W*?>||g; \
-		s|</case>||g; \
-		s|<colloc\W*?>||g; \
-		s|</colloc>||g; \
-		s|<def\W*?>||g; \
-		s|</def>||g; \
-		s|<gramGrp\W*?>||g; \
-		s|</gramGrp>||g; \
-		s|<lbl\W*?>||g; \
-		s|</lbl>||g; \
-		s|<mood\W*?>||g; \
-		s|</mood>||g; \
-		s|<number\W*?>||g; \
-		s|</number>||g; \
-		s|<subc\W*?>||g; \
-		s|</subc>||g; \
-		s|<usg\W*?>||g; \
-		s|</usg>||g; \
-		s|<xr\W*?>||g; \
-		s|</xr>||g; \
-		s|^\s+||g; \
-		s|^ +\n +$||g; \
-		s|<div2 [a-z]+"||g; \	
-		s|<sense >||g; \
-		s|<sense/>||g; \
-		s|</ref>||g; \
-		s|<lang>||g; \
-		s|</lang>||g; \
-		s|<gen>||g; \
-		s|</gen>||g; \
-		s|<ref />||g; \
-		s|</gram>||g; \
-		s|<sense />||g; \
-		s|</change>||g; \
-		s|<change>||g; \
-		s|</encodingDesc>||g; \
-		s|<encodingDesc>||g; \
-		s|encoding"utf-8"?>||g; \
+		's|<entryFree.*?[^<\n\r]>|\n\n_____\n\n|g; \
+		s|<text lang="en">||g; \
+		s|<body>||g; \
+		s|<\?xml version="1.0" encoding="utf-8"\?><TEI.2>||g; \
+		s|<teiHeader status="new" type="text">||g; \
+		s|<fileDesc>||g; \
+		s|<titleStmt>||g; \
+		s|<title>||g; \
+		s|</authority>||g;
+		s|</monogr>||g;
+		s|</entryFree>||g;
+		s|</colloc>||g;
+		s|<gram.*?[^<\n\r]>||g;
+		s|</title>||g; \
+		s|<title type="sub">||g; \
+		s|<author>||g; \
+		s|<funder n="org:NSF">||g; \
+		s|</author>||g; \
 		s|</funder>||g; \
-		s|<funder n"org:NSF">||g; \
-		s|<idno >0866850899</idno>||g; \
-		s|<language >Arabic</language>||g; \
-		s|<language >English</language>||g; \
-		s|<language >Greek</language>||g; \
-		s|<language >Latin</language>||g; \
-		s|<language >Transliterated Arabic</language>||g; \
-		s|</langUsage>||g; \
-		s|<langUsage>||g; \
-		s|</name>||g; \
-		s|<name>||g; \
-		s|</profileDesc>||g; \
-		s|<profileDesc>||g; \
-		s|<refsDecl doctype"TEI.2">||g; \
+		s|</titleStmt>||g; \
+		s|<publicationStmt>||g; \
+		s|<publisher>||g; \
+		s|</publisher>||g; \
+		s|<pubPlace>||g; \
+		s|</pubPlace>||g; \
+		s|<authority>||g; \
+		s|</publicationStmt>||g; \
+		s|<sourceDesc>||g; \
+		s|<biblStruct>||g; \
+		s|<monogr>||g; \
+		s|<imprint>||g; \
+		s|<date>||g; \
+		s|</date>||g; \
+		s|</imprint>||g; \
+		s|<idno type="ISBN">|ISBN: |g; \
+		s|</idno>||g; \
+		s|</biblStruct>||g; \
+		s|</sourceDesc>||g; \
+		s|</fileDesc>||g; \
+		s|<encodingDesc>||g; \
+		s|<refsDecl doctype="TEI.2">||g; \
+		s|<state unit="entry"/>||g; \
 		s|</refsDecl>||g; \
-		s|</resp>||g; \
+		s|<state unit="alphabetic letter"/>||g; \
+		s|<state n="chunk" unit="root"/>||g; \
+		s|</encodingDesc>||g; \
+		s|<profileDesc>||g; \
+		s|<langUsage>||g; \
+		s|<language id="[a-z]+">||g; \
+		s|</language>||g; \
+		s|</langUsage>||g; \
+		s|</profileDesc>||g; \
+		s|<revisionDesc>||g; \
+		s|<change>||g; \
+		s|<respStmt>||g; \
+		s|<name>||g; \
+		s|</name>||g; \
 		s|<resp>||g; \
 		s|</respStmt>||g; \
-		s|<respStmt>||g; \
+		s|</resp>||g; \
+		s|<item>||g; \
+		s|</item>||g; \
+		s|</change>||g; \
 		s|</revisionDesc>||g; \
-		s|<revisionDesc>||g; \
-		s|(\s+\s+)+| |g; \
-		s|\n| |g; \
-		s#((―|-)*b[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s#((―|-)*a[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s#((―|-)*B[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s#((―|-)*A[0-9]+(―|-)+)#\n\n[$1]#g; \
-		s|_____|\n\n_____\n\n|g; \
-		s|######|\n|g; \
-		s|" >||g; \
-		s|<div2 n"||g; \
-		s|<ref >||g; \
-		s|orig"" />||g; \
-		s|<gram >||g; \
-		s|<state />||g; \
-		s|>| |g; \
-		s|[ ]{2,}| |g; \
-		s|<state /||g; \
-		s|<gram||g; \
-		s|<ref||g; \
-		s|<div2 n||g;' $FILENAME_XML
+		s|</teiHeader>||g; \
+		s|<pb n="1"/>||g; \
+		s|<div1 part="N" n="ا" org="uniform" sample="complete" type="alphabetic letter">||g; \
+		s|<head lang="ar">ا</head>||g; \
+		s|<div2 part="N" n="ا" org="uniform" sample="complete" type="root">||g; \
+		s|</form>||g; \
+		s|<form>||g; \
+		s|<orth.*?[^<\n\r]>||g; \
+		s|</orth>||g; \
+		s|<sense.*?[^<\n\r]>||g; \
+		s|</sense>||g; \
+		s|<foreign.*?[^<\n\r]>||g; \
+		s|</foreign>||g; \
+		s|<dictScrap>||g; \
+		s|</dictScrap>||g; \
+		s|<def>||g; \
+		s|</def>||g; \
+		s|</div2>||g; \
+		s|<div2.*?[^<\n\r]>||g; \
+		s|<itype.*?[^<\n\r]>||g; \
+		s|</itype>||g; \
+		s|<mood>||g; \
+		s|</mood>||g; \
+		s|<form.*?[^<\n\r]>||g; \
+		s|<number>||g; \
+		s|</number>||g; \
+		s|<gramGrp>||g; \
+		s|</gramGrp>||g; \
+		s|<lbl>||g; \
+		s|</lbl>||g; \
+		s|<subc>||g; \
+		s|</subc>||g; \
+		s|<usg>||g; \
+		s|</usg>||g; \
+		s|<xr>||g; \
+		s|</xr>||g; \
+		s|<ref.*?[^<\n\r]>||g; \
+		s|</ref>||g; \
+		s|<colloc>||g; \
+		s|<pb.*?[^<\n\r]>||g; \
+		s|<lang>||g; \
+		s|</lang>||g; \
+		s|<case>||g; \
+		s|</case>||g; \
+		s|<gen>||g; \
+		s|</gen>||g; \
+		s| <colloc.*?[^<\n\r]>||g; \
+		s|</gram>||g; \
+		s|<usg.*?[^<\n\r]>||g; \
+		s|</div1>||g; \
+		s|<div1.*?[^<\n\r]>||g; \
+		s|<head.*?[^<\n\r]>||g; \
+		s|</head>||g; \
+		s|<hi.*?[^<\n\r]>||g; \
+		s|</hi>||g; \
+		s|</body>||g; \
+		s|</text>||g; \
+		s|</TEI.2>||g; \
+		s|=| |g; \
+		s|\r|\n|g; \
+		s|\f|\n|g; \
+		s|\n\n\n|\n|g; \
+		s|\n\n|\n|g; \
+		s|_____|\n\n\n_____\n|g; \
+		s|^\s+||g;' $FILENAME_XML		
+		#editpadpro7 $FILENAME_XML
+}
+
+2_convert2_dictd_and_mix_tashkeel_and_tasheel_less_dicts(){
+	# this will enable us to search for tashkeel-less words
+	dictfmt --utf8 -u dfmcreator@gmail.com -s "Salmone Arabic-English Lexicon" \
+	-c5 salmone-lexicon-no-tashkeel < $FILENAME_XML
+	# delete inconsistencies from index file
+	sed -e '1,1390d' -i salmone-lexicon-no-tashkeel.index
+	
+	# this will enable us to search for words with tashkeel
+	dictfmt --utf8 --allchars -u dfmcreator@gmail.com -s "Salmone Arabic-English Lexicon" \
+	-c5 salmone-lexicon-tashkeel < $FILENAME_XML
+	# delete inconsistencies from index file
+	sed -e '1,1389d' -i salmone-lexicon-tashkeel.index
+}
+
+3_convert2CSVwithPYGLOSSARY(){
+	python2.7 ../../deps/pyglossary/pyglossary.py salmone-lexicon-no-tashkeel.index salmone-lexicon-no-tashkeel.txt	
+	python2.7 ../../deps/pyglossary/pyglossary.py salmone-lexicon-tashkeel.index salmone-lexicon-tashkeel.txt
+	# Join the two files
+	cat salmone-lexicon-no-tashkeel.txt salmone-lexicon-tashkeel.txt > salmone-lexicon.txt
+	#editpadpro7 salmone-lexicon.txt
+}
+
+further_Cleanup(){
+	perl -p -i -e \
+		's|\\n| |g; \
+		s|[ ]{2,}| |g;' salmone-lexicon.txt
 }
 
 convert_2_dictd(){
-dictfmt --utf8 -u dfmcreator@gmail.com -s "Salmone Arabic-English Lexicon" -c5 salmone-lexicon < $FILENAME_XML
+	python2.7 ../../deps/pyglossary/pyglossary.py salmone-lexicon.txt salmone-lexicon.index
 }
 
 cleanup(){
-rm -rfv $FILENAME_XML dictd-salmone_ara_eng-lexicon
-mkdir -p dictd-salmone_ara_eng-lexicon && mv -v salmone-lexicon.dict salmone-lexicon.index dictd-salmone_ara_eng-lexicon/
+	rm -rfv $FILENAME_XML
+	mkdir -p dictd-salmone_ara_eng-lexicon && \
+	dictunzip salmone-lexicon.dict.dz
+	mv -vf salmone-lexicon.dict salmone-lexicon.index dictd-salmone_ara_eng-lexicon/
+	rm -rfv salmone-lexicon.txt salmone-lexicon-no-tashkeel.dict salmone-lexicon-no-tashkeel.index salmone-lexicon-no-tashkeel.txt salmone-lexicon-tashkeel.dict salmone-lexicon-tashkeel.index salmone-lexicon-tashkeel.txt
 }
 
-echo Stage 1 join_files
+echo Stage 0 join_files
 join_files
 
-echo Stage 2 first_Cleanup
+echo Stage 1 first_Cleanup
 first_Cleanup
 
-echo Stage 3 second_Cleanup
-second_Cleanup
+echo Stage 2 2_convert2_dictd_and_mix_tashkeel_and_tasheel_less_dicts
+2_convert2_dictd_and_mix_tashkeel_and_tasheel_less_dicts
 
-echo Stage 4 third_Cleanup
-third_Cleanup
+echo Stage 3 3_convert2CSVwithPYGLOSSARY
+3_convert2CSVwithPYGLOSSARY
 
-echo Stage 5 fourth_Cleanup
-fourth_Cleanup
+echo Stage 4 further_Cleanup
+further_Cleanup
 
-echo Stage 6 fifth_Cleanup
-fifth_Cleanup
-
-echo Stage 7 convert_2_dictd
+echo Stage 5 convert_2_dictd
 convert_2_dictd
 
 echo Stage 8 cleanup
