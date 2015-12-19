@@ -12,7 +12,7 @@ echo \</tr\> >> table.html
 for file in *.7z
 do
 	echo \<tr\> >> table.html
-	echo \<td\>\<a href=\"dist\/PUTLINKHERE\/`echo $file`\"\>`echo $file`\</a\>\</td\> >> table.html
+	echo \<td\>\<a href=\"dist\/`basename $PWD`\/`echo $file`\"\>`echo $file`\</a\>\</td\> >> table.html
 	echo \<td\>`stat -c %y $file`\</td\> >> table.html
 	echo \</tr\> >> table.html
 done
